@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: Inditex Price API
+  version: 1.0.0
+  description: |
+    REST API to retrieve applicable product price based on application date, product ID and brand ID.
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /prices:
+    get:
+      summary: Retrieve applicable price
+      operationId: getPrice
+      parameters:
+        - name: applicationDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: productId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: brandId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Price successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'
+        '404':
+          description: No applicable price found
+        '400':
+          description: Invalid input
+
+components:
+  schemas:
+    PriceResponse:
+      type: object
+      properties:
+        productId:
+          type: integer
+          example: 35455
+        brandId:
+          type: integer
+          example: 1
+        priceList:
+          type: integer
+          example: 2
+        startDate:
+          type: string
+          format: date-time
+          example: 2020-06-14T15:00:00
+        endDate:
+          type: string
+          format: date-time
+          example: 2020-06-14T18:30:00
+        price:
+          type: number
+          format: double
+          example: 25.45
+        currency:
+          type: string
+          example: EUR
