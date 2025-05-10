@@ -39,6 +39,9 @@
         <jakarta.annotation-api.version>2.0.0</jakarta.annotation-api.version>
         <lombok.version>1.18.30</lombok.version>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
+        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <pitest-maven.version>1.15.0</pitest-maven.version>
+        <junit-jupiter.version>5.10.2</junit-jupiter.version>
     </properties>
 
     <dependencies>
@@ -106,6 +109,12 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -150,7 +159,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Openapi generator -->
+            <!-- OpenAPI Generator Maven Plugin generates Java code from an OpenAPI specification
+            to create API interfaces and data models, streamlining integration with the REST API. -->
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
@@ -188,6 +198,46 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Surefire Plugin runs JUnit 5 unit and integration tests during the Maven build
+            and generates test reports in target/surefire-reports -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+
+            <!-- PITest Maven Plugin runs mutation tests to check test effectiveness by introducing
+            controlled code changes and generating a coverage report in target/pit-reports -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest-maven.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <targetClasses>
+                        <param>com.inditex.price.adapter.in.rest.PriceController</param>
+                        <param>com.inditex.price.adapter.out.persistence.PriceRepositoryAdapter</param>
+                        <param>com.inditex.price.application.service.PriceService</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.inditex.price.adapter.in.rest.PriceControllerTest</param>
+                        <param>com.inditex.price.adapter.out.persistence.PriceRepositoryAdapterTest</param>
+                        <param>com.inditex.price.application.service.PriceServiceTest</param>
+                    </targetTests>
+                    <outputFormats>
+                        <param>HTML</param>
+                    </outputFormats>
+                    <junit5Plugin>true</junit5Plugin>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>
