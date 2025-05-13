@@ -8,15 +8,17 @@ This project implements a service to manage and retrieve prices based on a set o
 
 2. **REST API**: The service exposes a REST API to retrieve the applicable price for a given product, brand, and application date.
 
-3. **Database**: We are using H2 as an in-memory database for development and testing purposes. It allows us to quickly run tests and verify the application without having to set up an external database.
+3. **API First:** The controller was developed following an API First approach. The API [contract](https://github.com/cmartinferrer/cmf-inditex-price-api/blob/main/src/main/resources/openapi/openapi.yaml) was defined upfront using OpenAPI, and the implementation was aligned to that specification. This ensures consistency between documentation and implementation, facilitates collaboration across teams (backend, frontend, QA), and reduces integration issues.
 
-4. **Docker**: The project is dockerized to provide an easy-to-deploy solution in any environment. It ensures consistency across different machines and simplifies the setup process for developers.
+4. **Database**: We are using H2 as an in-memory database for development and testing purposes. It allows us to quickly run tests and verify the application without having to set up an external database.
 
-5. **Testing**: Unit tests are written following the **Given-When-Then** structure with **JUnit 5**. Integration tests are performed using MockMvc for testing the REST endpoints.
+5. **Docker**: The project is dockerized to provide an easy-to-deploy solution in any environment. It ensures consistency across different machines and simplifies the setup process for developers.
 
-6. **Swagger**: Swagger is used to generate and display API documentation. It provides an interactive interface to test the endpoints directly in the browser.
+6. **Testing**: Unit tests are written following the **Given-When-Then** structure with **JUnit 5**. Integration tests are performed using MockMvc for testing the REST endpoints.
 
-7. **Data Mapping**: We use **MapStruct** to map between the domain model (`Price`) and the entity model (`PriceEntity`). This reduces boilerplate code and ensures a clean separation between layers.
+7. **Swagger**: Swagger is used to generate and display API documentation. It provides an interactive interface to test the endpoints directly in the browser.
+
+8. **Data Mapping**: We use **MapStruct** to map between the domain model (`Price`) and the entity model (`PriceEntity`). This reduces boilerplate code and ensures a clean separation between layers.
 
 ## 🛠️ Prerequisites
 
@@ -120,7 +122,7 @@ This project includes a comprehensive set of Postman tests to validate the funct
 ### 🧭 Running Postman Tests
 
 1. **Import the Postman Collection:**
-  - Download the Postman collection file provided or import it directly into Postman.
+  - Download the [Postman collection](https://github.com/cmartinferrer/cmf-inditex-price-api/blob/main/src/main/resources/postman/cmf-inditex-price-api.postman_collection.json) file provided or import it directly into Postman.
 
 2. **Execute the Tests:**
   - Open the collection in Postman and click on the "Run" button to execute all tests in the collection.
